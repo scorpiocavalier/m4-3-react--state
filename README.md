@@ -22,25 +22,28 @@ Start by creating a new `Typeahead.js` component. As props, it should take:
 Render it inside the main component, `App`:
 
 ```diff
-import data from '../data';
+import React from 'react';
 
++import data from '../data';
+
+import GlobalStyles from './GlobalStyles';
 +import Typeahead from './Typeahead';
 
-const App = () => {
+function App(props) {
+  // TODO!
   return (
     <>
       <GlobalStyles />
-      <Wrapper>
-+       <Typeahead
-+         suggestions={data.books}
-+         handleSelect={(suggestion) => {
-+           window.alert(suggestion)
-+         }}
-+       />
-      </Wrapper>
+-     {/* TODO */}
++     <Typeahead
++       suggestions={data.books}
++       handleSelect={(suggestion) => {
++         window.alert(suggestion)
++       }}
++     />
     </>
   )
-}
+};
 ```
 
 For now, our `handleSelect` function opens an alert dialog with the name of the book we've selected.
@@ -111,6 +114,8 @@ When the user presses a key on their keyboard, we check and see if it's the "Ent
 While we're here, we should also style the input and button to match the designs:
 
 ![initial design](./__lecture/assets/initial-design.png)
+
+_HINT:_ Inside `App`, you probably want to wrap the `<Typeahead>` element in a `<Wrapper>` so that you can center it in the window.
 
 ---
 

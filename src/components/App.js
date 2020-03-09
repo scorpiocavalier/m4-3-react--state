@@ -1,8 +1,14 @@
 import React from 'react';
 
+import GlobalStyles from './GlobalStyles';
+
 function App(props) {
-    // TODO!
-    return 'Hello World';
-}
+    return (
+        <>
+            <GlobalStyles />
+            {/* TODO */}
+        </>
+    )
+};
 
 export default App;
