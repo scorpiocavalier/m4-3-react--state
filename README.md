@@ -36,7 +36,7 @@ const App = () => {
 +         handleSelect={(suggestion) => {
 +           window.alert(suggestion)
 +         }}
-+       >
++       />
       </Wrapper>
     </>
   )
