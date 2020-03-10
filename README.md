@@ -371,12 +371,12 @@ const Typeahead = (
             return;
           }
           case 'ArrowUp': {
-            // TODO: Handle moving the selection up
             setSelectedSuggestionIndex(selectedSuggestionIndex - 1);
+            return;
           }
           case 'ArrowDown': {
-            // TODO: Handle moving the selection down
             setSelectedSuggestionIndex(selectedSuggestionIndex + 1);
+            return;
           }
         }
       }}
