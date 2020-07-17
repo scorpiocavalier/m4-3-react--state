@@ -2,7 +2,7 @@
 
 You may have noticed, after adding some styling, that a weird artifact is shown when there are no suggestions:
 
-![initial design](./__lecture/assets/always-visible.gif)
+![initial design](../__lecture/assets/always-visible.gif)
 
 This is because we're _always rendering_ the list of results!
 

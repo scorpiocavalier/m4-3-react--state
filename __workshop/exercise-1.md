@@ -50,6 +50,6 @@ Give this a shot, and then take a look at the hint for how we decided to do it.
 
 While we're here, we should also style the input and button to match the designs:
 
-![initial design](./__lecture/assets/initial-design.png)
+![initial design](../__lecture/assets/initial-design.png)
 
 _HINT:_ Inside `App`, you probably want to wrap the `<Typeahead>` element in a `<Wrapper>` so that you can center it in the window.

@@ -30,7 +30,7 @@ Given a title "The Girls":
 
 Start by trying to render a list of the matches below the input:
 
-![working demo](./__lecture/assets/unstyled-filtered-items.png)
+![working demo](../__lecture/assets/unstyled-filtered-items.png)
 
 Most of these results have the word "the" in them explicitly. The third item, "Technically Wrong", has it hidden in the word "oTHEr".
 
@@ -51,7 +51,7 @@ Give this a shot, and then take a look at the hint for how we decided to do it.
 
 After you have the logic working, add some styles to match the mockup. You can add a subtle yellow background on hover to indicate which option is selected:
 
-![working demo](./__lecture/assets/suggestion-init-styles.png)
+![working demo](../__lecture/assets/suggestion-init-styles.png)
 
 To do this, you'll want to use styled-components. You can create a new `Suggestion` component:
 

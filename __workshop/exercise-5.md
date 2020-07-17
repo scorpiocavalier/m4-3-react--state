@@ -10,7 +10,7 @@ What should the ideal behaviour be? You might think that we should use the "Tab"
 
 Here's our ideal behaviour:
 
-![keyboard-demo](./__lecture/assets/typeahead-keyboard-demo.gif)
+![keyboard-demo](../__lecture/assets/typeahead-keyboard-demo.gif)
 
 We're already listening for keypresses, since we're calling the handler when the user presses "enter". Let's also add handlers for the up and down arrows:
 
@@ -22,14 +22,14 @@ We're already listening for keypresses, since we're calling the handler when the
     // ev.key. This is an optional change, though; we could
     // still do it with if/else-if.
     switch (ev.key) {
-      case 'Enter': {
+      case "Enter": {
         handleSelect(ev.target.value);
         return;
       }
-      case 'ArrowUp': {
+      case "ArrowUp": {
         // TODO: Handle moving the selection up
       }
-      case 'ArrowDown': {
+      case "ArrowDown": {
         // TODO: Handle moving the selection down
       }
     }
@@ -49,7 +49,7 @@ const Typeahead = (
     /* snip */
   }
 ) => {
-  const [value, setValue] = React.useState('');
+  const [value, setValue] = React.useState("");
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = React.useState(
     0
   );
@@ -59,15 +59,15 @@ const Typeahead = (
     <input
       onKeyDown={(ev) => {
         switch (ev.key) {
-          case 'Enter': {
+          case "Enter": {
             handleSelect(ev.target.value);
             return;
           }
-          case 'ArrowUp': {
+          case "ArrowUp": {
             setSelectedSuggestionIndex(selectedSuggestionIndex - 1);
             return;
           }
-          case 'ArrowDown': {
+          case "ArrowDown": {
             setSelectedSuggestionIndex(selectedSuggestionIndex + 1);
             return;
           }
