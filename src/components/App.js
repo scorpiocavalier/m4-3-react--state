@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-import GlobalStyles from './GlobalStyles';
+import GlobalStyles from './GlobalStyles'
 
 const App = (props) => {
   return (
@@ -8,7 +8,7 @@ const App = (props) => {
       <GlobalStyles />
       {/* TODO */}
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App
