@@ -42,9 +42,23 @@ const Suggestion = styled.li`
   }
 `
 
-export default ({ suggestions, handleSelect }) => {
+const BoldText = styled.span`
+  font-weight: 600;
+`
+
+const InText = styled.span`
+  font-style: italic;
+`
+
+const CategoryText = styled(InText)`
+  color: purple;
+`
+
+export default ({ data: { categories, books: suggestions }, handleSelect }) => {
   const [value, setValue] = useState('')
-  const matchedSuggestions = suggestions.filter(({ title }) => title.toLowerCase().includes(value.toLowerCase()))
+  const matchedSuggestions = value.length > 1 && suggestions.filter(({ title }) => {
+    return title.toLowerCase().includes(value.toLowerCase())
+  })
 
   return (
     <Wrapper>
@@ -61,11 +75,22 @@ export default ({ suggestions, handleSelect }) => {
       {
         (matchedSuggestions.length > 0 && value !== '') &&
         <SuggestionWrapper>
+        {console.count("secondPart")}
         {
-          matchedSuggestions.map(suggestion => {
+          matchedSuggestions.map(({ id, title, categoryId }) => {
+            const index       = title.toLowerCase().indexOf(value.toLowerCase())
+            const firstPart   = title.slice(0, index + 1)
+            const secondPart  = title.slice(index + 1)
+            const category    = categories[categoryId].name
+
+            console.log("secondPart", secondPart)
+
             return (
-              <Suggestion key={suggestion.id} onClick={() => handleSelect(suggestion.title)}>
-                {suggestion.title}
+              <Suggestion key={id} onClick={() => handleSelect(title)}>
+                {firstPart}
+                <BoldText>{secondPart}</BoldText>
+                <InText>{` in `}</InText>
+                <CategoryText>{category}</CategoryText>
               </Suggestion>
             )
           })

@@ -11,10 +11,7 @@ export default (props) => {
   return (
     <>
       <GlobalStyles />
-      <Typeahead
-        suggestions={data.books}
-        handleSelect={handleSelect}
-      />
+      <Typeahead data={data} handleSelect={handleSelect} />
     </>
   )
 }
