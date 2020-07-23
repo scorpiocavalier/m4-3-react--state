@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const Button = styled.button`
@@ -43,7 +43,8 @@ const Suggestion = styled.li`
 `
 
 export default ({ suggestions, handleSelect }) => {
-  const [value, setValue] = React.useState('')
+  const [value, setValue] = useState('')
+  const matchedSuggestions = suggestions.filter(({ title }) => title.toLowerCase().includes(value.toLowerCase()))
 
   return (
     <Wrapper>
@@ -51,33 +52,26 @@ export default ({ suggestions, handleSelect }) => {
         <Input
           type='text'
           value={value}
-          onChange={(ev) => setValue(ev.target.value)}
-          onKeyDown={(ev) => {
-            if (ev.key === 'Enter') {
-              handleSelect(ev.target.value)
-            }
-          }}
+          onChange={ev => setValue(ev.target.value)}
+          onKeyDown={ev => {if (ev.key === 'Enter') handleSelect(ev.target.value)}}
         />
-
         <Button onClick={() => setValue('')}>Clear</Button>
       </InputWrapper>
 
-      <SuggestionWrapper>
+      {
+        (matchedSuggestions.length > 0 && value !== '') &&
+        <SuggestionWrapper>
         {
-          suggestions
-            .filter(({ title }) => title.toLowerCase().includes(value.toLowerCase()))
-            .map(suggestion => {
-              return (
-                <Suggestion
-                  key={suggestion.id}
-                  onClick={() => handleSelect(suggestion.title)}
-                >
-                  {suggestion.title}
-                </Suggestion>
-              )
-            })
+          matchedSuggestions.map(suggestion => {
+            return (
+              <Suggestion key={suggestion.id} onClick={() => handleSelect(suggestion.title)}>
+                {suggestion.title}
+              </Suggestion>
+            )
+          })
         }
-      </SuggestionWrapper>
+        </SuggestionWrapper>
+      }
     </Wrapper>
   )
 }
