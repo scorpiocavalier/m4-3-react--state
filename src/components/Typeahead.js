@@ -73,17 +73,14 @@ export default ({ data: { categories, books: suggestions }, handleSelect }) => {
       </InputWrapper>
 
       {
-        (matchedSuggestions.length > 0 && value !== '') &&
+        matchedSuggestions.length > 0 && value !== '' &&
         <SuggestionWrapper>
-        {console.count("secondPart")}
         {
           matchedSuggestions.map(({ id, title, categoryId }) => {
             const index       = title.toLowerCase().indexOf(value.toLowerCase())
-            const firstPart   = title.slice(0, index + 1)
-            const secondPart  = title.slice(index + 1)
+            const firstPart   = title.slice(0, index + value.length)
+            const secondPart  = title.slice(index + value.length)
             const category    = categories[categoryId].name
-
-            console.log("secondPart", secondPart)
 
             return (
               <Suggestion key={id} onClick={() => handleSelect(title)}>
