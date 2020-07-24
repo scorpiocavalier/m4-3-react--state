@@ -101,7 +101,13 @@ export default ({ data: { categories, books: suggestions }, handleSelect }) => {
             const isSelected  = index === selectedSuggestionIndex
 
             return (
-              <Suggestion key={id} isSelected={isSelected} onClick={() => handleSelect(title)}>
+              <Suggestion
+                key={id}
+                value={index}
+                isSelected={isSelected}
+                onClick={() => handleSelect(title)}
+                onMouseOver={ev => setSelectedSuggestionIndex(ev.currentTarget.value)}
+              >
                 {firstPart}
                 <BoldText>{secondPart}</BoldText>
                 <InText>{` in `}</InText>
