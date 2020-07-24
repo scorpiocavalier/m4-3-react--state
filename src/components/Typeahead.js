@@ -106,7 +106,7 @@ export default ({ data: { categories, books: suggestions }, handleSelect }) => {
                 value={index}
                 isSelected={isSelected}
                 onClick={() => handleSelect(title)}
-                onMouseOver={ev => setSelectedSuggestionIndex(ev.currentTarget.value)}
+                onMouseEnter={ev => setSelectedSuggestionIndex(ev.currentTarget.value)}
               >
                 {firstPart}
                 <BoldText>{secondPart}</BoldText>
