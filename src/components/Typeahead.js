@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 const Button = styled.button`
@@ -54,10 +54,24 @@ const CategoryText = styled(InText)`
 
 export default ({ data: { categories, books: suggestions }, handleSelect }) => {
   const [value, setValue] = useState('')
+  const [showSuggestion, setShowSuggestion] = useState(false)
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0)
-  const matchedSuggestions = value.length > 1 && suggestions.filter(({ title }) => {
-    return title.toLowerCase().includes(value.toLowerCase())
-  })
+  const matchedSuggestions = value.length >= 2
+    ? suggestions.filter(({ title }) => title.toLowerCase().includes(value.toLowerCase()))
+    : []
+
+  // CONSOLE LOGGING ONLY
+  console.count("render")
+  console.log("matchedSuggestions:", matchedSuggestions)
+  console.log("showSuggestion:", showSuggestion)
+  console.log("value:", value)
+  // CONSOLE LOGGING ONLY
+
+  useEffect(() => {
+    matchedSuggestions.length > 0
+      ? setShowSuggestion(true)
+      : setShowSuggestion(false)
+  }, [matchedSuggestions.length])
 
   return (
     <Wrapper>
@@ -67,22 +81,28 @@ export default ({ data: { categories, books: suggestions }, handleSelect }) => {
           value={value}
           onChange={ev => setValue(ev.target.value)}
           onKeyDown={ev => {
-            switch(ev.key) {
-              case "Enter": {
-                handleSelect(ev.target.value)
-                return
-              }
-              case "ArrowUp": {
-                if(selectedSuggestionIndex > 0)
+            if(matchedSuggestions.length > 0 && value !== '') {
+              switch(ev.key) {
+                case "Enter": {
+                  handleSelect(ev.target.value)
+                  return
+                }
+                case "ArrowUp": {
+                  if(selectedSuggestionIndex > 0)
                   setSelectedSuggestionIndex(selectedSuggestionIndex - 1)
-                return
-              }
-              case "ArrowDown": {
-                if(selectedSuggestionIndex < matchedSuggestions.length - 1)
+                  return
+                }
+                case "ArrowDown": {
+                  if(selectedSuggestionIndex < matchedSuggestions.length - 1)
                   setSelectedSuggestionIndex(selectedSuggestionIndex + 1)
-                return
+                  return
+                }
+                case "Escape": {
+                  setShowSuggestion(false)
+                  return
+                }
+                default: return
               }
-              default: return
             }
           }}
         />
@@ -90,7 +110,7 @@ export default ({ data: { categories, books: suggestions }, handleSelect }) => {
       </InputWrapper>
 
       {
-        matchedSuggestions.length > 0 && value !== '' &&
+        showSuggestion &&
         <SuggestionWrapper>
         {
           matchedSuggestions.map(({ id, title, categoryId }, index) => {
