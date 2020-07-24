@@ -37,9 +37,7 @@ const SuggestionWrapper = styled.ul`
 
 const Suggestion = styled.li`
   padding: 5px;
-  &:hover {
-    background-color: lightyellow;
-  }
+  background-color: ${ ({ isSelected }) => isSelected && "lightyellow" };
 `
 
 const BoldText = styled.span`
@@ -56,6 +54,7 @@ const CategoryText = styled(InText)`
 
 export default ({ data: { categories, books: suggestions }, handleSelect }) => {
   const [value, setValue] = useState('')
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0)
   const matchedSuggestions = value.length > 1 && suggestions.filter(({ title }) => {
     return title.toLowerCase().includes(value.toLowerCase())
   })
@@ -67,7 +66,25 @@ export default ({ data: { categories, books: suggestions }, handleSelect }) => {
           type='text'
           value={value}
           onChange={ev => setValue(ev.target.value)}
-          onKeyDown={ev => {if (ev.key === 'Enter') handleSelect(ev.target.value)}}
+          onKeyDown={ev => {
+            switch(ev.key) {
+              case "Enter": {
+                handleSelect(ev.target.value)
+                return
+              }
+              case "ArrowUp": {
+                if(selectedSuggestionIndex > 0)
+                  setSelectedSuggestionIndex(selectedSuggestionIndex - 1)
+                return
+              }
+              case "ArrowDown": {
+                if(selectedSuggestionIndex < matchedSuggestions.length - 1)
+                  setSelectedSuggestionIndex(selectedSuggestionIndex + 1)
+                return
+              }
+              default: return
+            }
+          }}
         />
         <Button onClick={() => setValue('')}>Clear</Button>
       </InputWrapper>
@@ -76,14 +93,15 @@ export default ({ data: { categories, books: suggestions }, handleSelect }) => {
         matchedSuggestions.length > 0 && value !== '' &&
         <SuggestionWrapper>
         {
-          matchedSuggestions.map(({ id, title, categoryId }) => {
-            const index       = title.toLowerCase().indexOf(value.toLowerCase())
-            const firstPart   = title.slice(0, index + value.length)
-            const secondPart  = title.slice(index + value.length)
+          matchedSuggestions.map(({ id, title, categoryId }, index) => {
+            const pivotIndex  = title.toLowerCase().indexOf(value.toLowerCase())
+            const firstPart   = title.slice(0, pivotIndex + value.length)
+            const secondPart  = title.slice(pivotIndex + value.length)
             const category    = categories[categoryId].name
+            const isSelected  = index === selectedSuggestionIndex
 
             return (
-              <Suggestion key={id} onClick={() => handleSelect(title)}>
+              <Suggestion key={id} isSelected={isSelected} onClick={() => handleSelect(title)}>
                 {firstPart}
                 <BoldText>{secondPart}</BoldText>
                 <InText>{` in `}</InText>
